@@ -1,5 +1,12 @@
 import pkg from "axios-cache-adapter";
 const { setup } = pkg;
+import igdbI from "igdb-api-node";
+const igdb = igdbI.default;
+
+const client_id = process.env.TWITCH_CLIENT_ID,
+  access_token = process.env.TWITCH_APP_ACCESS_TOKEN;
+
+const igdbClient = igdb(client_id, access_token);
 
 const headers = {
   "user-agent":
@@ -33,4 +40,35 @@ const crackClient = setup({
   },
 });
 
-export { crackClient };
+const Settings = {
+  offset: 0,
+  limit: 20,
+  sort: "",
+  search: "",
+  where: "",
+};
+
+const gameClient = async (settings = Settings) => {
+  const { offset, limit, sort, search, where, url } = settings;
+
+  const response = await igdbClient
+    .fields([
+      "*",
+      "screenshots.*",
+      "cover.*",
+      "rating",
+      "release_dates.*",
+      "aggregated_rating",
+      "platforms.*",
+    ])
+    .limit(limit || 20)
+    .offset(offset || 0)
+    .sort(sort)
+    .search(search)
+    .where(where)
+    .request("games");
+
+  return response.data;
+};
+
+export { crackClient, gameClient };

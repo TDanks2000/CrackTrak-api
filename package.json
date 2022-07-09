@@ -4,15 +4,20 @@
   "main": "./src/index.js",
   "license": "MIT",
   "type": "module",
+  "scripts": {
+    "start": "title CrackTrak API && nodemon ."
+  },
   "dependencies": {
     "axios": "^0.27.2",
     "axios-cache-adapter": "^2.7.3",
     "chalk": "^5.0.1",
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "fuzzysort": "1.2.1",
+    "igdb-api-node": "^5.0.1",
     "moment": "^2.29.4",
     "urlcat": "^2.0.4"
   }

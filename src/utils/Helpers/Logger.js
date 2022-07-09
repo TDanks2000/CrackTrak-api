@@ -11,11 +11,6 @@ const Logger = (req, res, next) => {
   console.log(chalk.bold.cyanBright`GOT REQUEST AT: ${req.path}`);
   console.log(chalk.bold.cyanBright`GOT REQUEST FROM: ${ip}`);
   console.log(chalk.bold.cyanBright`GOT REQUEST AT: ${time}`);
-  console.log(
-    chalk.bold.cyanBright.underline`PARAMS: [${values
-      .join(", ")
-      .toUpperCase()}]`
-  );
 
   console.log(` `);
   next(); // Passing the request to the next handler in the stack.
