@@ -13,4 +13,7 @@ router.use("/search", Search);
 import Get from "./get.js";
 router.use("/get", Get);
 
+import ALL from "./all.js";
+router.use("/all", ALL);
+
 export default router;
