@@ -28,7 +28,8 @@ const search = async (query) => {
 
   const result = await Fuzzy(titles, query, { threshold: -4 });
 
-  return { result, provider };
+  const Info = data[0];
+  return { result, provider, Info };
 };
 
 export default { provider, search };

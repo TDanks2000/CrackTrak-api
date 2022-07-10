@@ -1,5 +1,6 @@
 import express from "express";
 import { gameClient } from "../../utils/axios.js";
+
 const router = express.Router();
 
 router.get("/:id", ({ query, params }, res) => {

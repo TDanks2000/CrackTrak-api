@@ -60,6 +60,11 @@ const gameClient = async (settings = Settings) => {
       "release_dates.*",
       "aggregated_rating",
       "platforms.*",
+      "involved_companies.*",
+      "game_engines.*",
+      "websites.*",
+      "videos.*",
+      "genres.*",
     ])
     .limit(limit || 20)
     .offset(offset || 0)

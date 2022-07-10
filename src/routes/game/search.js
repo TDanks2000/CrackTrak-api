@@ -15,7 +15,7 @@ router.get("/", async ({ query, body }, res) => {
     limit: query.limit || 20,
     sort: "",
     search: search,
-    where: "platforms = 6",
+    where: `platforms.abbreviation = "PC"`,
   };
 
   gameClient(settings)

@@ -25,9 +25,9 @@ export default async function SearchCrack(query, providers = defaultProviders) {
     ({ search, provider }) =>
       new Promise((resolve, reject) => {
         search(query)
-          .then(({ provider, result }) => {
+          .then(({ provider, result, Info }) => {
             if (!result) reject(`${provider} does not have cracks`);
-            else resolve({ provider, result });
+            else resolve({ provider, result, Info });
           })
           .catch(() => reject(`${provider} did not respond`));
       })

@@ -8,8 +8,7 @@ router.get("/", ({ query }, res) => {
     limit: query.limit || 20,
     sort: "aggregated_rating desc",
     search: "",
-    where:
-      "platforms = 6 & aggregated_rating != n & aggregated_rating_count > 5",
+    where: `platforms.abbreviation = "PC" & aggregated_rating != n & aggregated_rating_count > 5`,
   };
 
   gameClient(settings)

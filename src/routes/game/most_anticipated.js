@@ -10,7 +10,7 @@ router.get("/", ({ query }, res) => {
     limit: query.limit || 20,
     sort: "hypes desc",
     search: "",
-    where: `platforms = 6 & hypes != n & first_release_date > ${DateNow}`,
+    where: `platforms.abbreviation = "PC" & hypes != n & first_release_date > ${DateNow}`,
   };
 
   gameClient(settings)
