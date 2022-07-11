@@ -4,12 +4,12 @@ import moment from "moment";
 const Logger = (req, res, next) => {
   let time = moment().format("HH:mm:ss");
 
-  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-
+  const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+  const realIP = ip === "::1" ? "127.0.0.1" : ip;
   const values = Object.values(req.query);
 
   console.log(chalk.bold.cyanBright(`GOT REQUEST AT: ${req.path}`));
-  console.log(chalk.bold.cyanBright(`GOT REQUEST FROM: ${ip}`));
+  console.log(chalk.bold.cyanBright(`GOT REQUEST FROM: ${realIP}`));
   console.log(chalk.bold.cyanBright(`GOT REQUEST AT: ${time}`));
 
   console.log(` `);
