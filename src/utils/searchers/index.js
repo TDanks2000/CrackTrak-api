@@ -3,10 +3,12 @@ import ErrorBuilder from "../Helpers/errorBuilder.js";
 
 import GameStatus from "./gamestatus.js";
 import Predb from "./predb.js";
-import SteamCrackedGames from "./steamcrackedgames.js";
+import FitGirl from "./fitgirl.js";
+import PcGamesTorrents from "./pcgamestorrents.js";
+import Skidrow from "./skidrow.js";
 
-const Providers = [GameStatus, Predb, SteamCrackedGames];
-const defaultProviders = ["gamestatus", "steamcrackedgames", "predb"];
+const Providers = [GameStatus, Predb, FitGirl, PcGamesTorrents, Skidrow];
+const defaultProviders = ["gamestatus", "PcGamesTorrents", "predb"];
 
 export default async function SearchCrack(query, providers = defaultProviders) {
   // filter out the needed providers

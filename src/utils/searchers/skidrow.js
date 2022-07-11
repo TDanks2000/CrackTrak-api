@@ -6,34 +6,31 @@ import urlcat from "urlcat";
 const urlCat = urlcat.default;
 
 const info = {
-  name: "steamcrackedgames",
-  url: "https://steamcrackedgames.com",
+  name: "skidrow",
+  url: "https://www.skidrowreloaded.com",
 };
 
 const provider = info.name;
 
 const search = async (query) => {
-  const url = await urlCat(info.url, "/search", {
-    q: query,
+  const url = urlCat(info.url, {
+    s: query,
   });
 
   const { data } = await crackClient.get(url);
 
   const $ = cheerio.load(data);
 
-  const container = $("tbody#tbody_games");
+  const items = $("#main-content").find("div.post");
 
   const titles = [];
-  container.find("tr").each((i, el) => {
-    const title = $(el).find("a.text-white").first().text().trim();
+  items.each((i, el) => {
+    if (i === 0) return;
 
-    const cracked = $(el)
-      .find("span.cracked-text")
-      .text()
-      .toLowerCase()
-      .includes("cracked");
+    const title = $(el).find("h2").text().trim();
 
-    title && cracked && titles.push(title);
+    if (title.toLowerCase().includes("unlocked")) return;
+    title && titles.push(title);
   });
 
   const result = await Fuzzy(

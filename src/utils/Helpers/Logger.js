@@ -7,7 +7,6 @@ const Logger = (req, res, next) => {
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 
   const values = Object.values(req.query);
-  console.log(values);
 
   console.log(chalk.bold.cyanBright(`GOT REQUEST AT: ${req.path}`));
   console.log(chalk.bold.cyanBright(`GOT REQUEST FROM: ${ip}`));
