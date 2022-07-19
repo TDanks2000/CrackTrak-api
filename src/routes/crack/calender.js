@@ -1,6 +1,7 @@
 import express from "express";
 const router = express.Router();
 import fuzzysort from "fuzzysort";
+import chalk from "chalk";
 
 import { crackClient } from "../../utils/axios.js";
 
@@ -8,7 +9,8 @@ router.get("/", async ({ query, body }, res) => {
   const gameStatusUrl =
     "https://gamestatus.info/back/api/gameinfo/game/gamecalendar/";
 
-  const { data } = await crackClient.get(gameStatusUrl);
+  const { data, request } = await crackClient.get(gameStatusUrl);
+  console.log(chalk.bold(`From cache: ${request.fromCache || false}`));
 
   const Array = data.response_game_calendar;
 

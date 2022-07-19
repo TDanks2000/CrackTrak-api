@@ -8,11 +8,18 @@ const Logger = (req, res, next) => {
   const realIP = ip === "::1" ? "127.0.0.1" : ip;
   const values = Object.values(req.query);
 
-  console.log(chalk.bold.cyanBright(`GOT REQUEST AT: ${req.path}`));
-  console.log(chalk.bold.cyanBright(`GOT REQUEST FROM: ${realIP}`));
-  console.log(chalk.bold.cyanBright(`GOT REQUEST AT: ${time}`));
-
   console.log(` `);
+  console.log(chalk.bold.cyanBright(`REQUEST URL ${req.path}`));
+  console.log(chalk.bold.yellowBright(`REQUEST FROM ${realIP}`));
+  console.log(chalk.bold.greenBright(`REQUEST AT ${time}`));
+  if (values.length > 0)
+    console.log(
+      chalk.bold.magentaBright(
+        `REQUEST PARAMS: [ ${values.join(", ").toUpperCase()} ]`
+      )
+    );
+  console.log(` `);
+
   next(); // Passing the request to the next handler in the stack.
 };
 

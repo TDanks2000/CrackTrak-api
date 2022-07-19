@@ -1,7 +1,11 @@
-import pkg from "axios-cache-adapter";
-const { setup } = pkg;
+import axiosCache from "axios-cache-adapter";
+const { setup, RedisStore } = axiosCache;
 import igdbI from "igdb-api-node";
 const igdb = igdbI.default;
+import redis from "redis";
+
+import hltb from "howlongtobeat";
+const hltbClient = new hltb.HowLongToBeatService();
 
 const client_id = process.env.TWITCH_CLIENT_ID,
   access_token = process.env.TWITCH_APP_ACCESS_TOKEN;
@@ -16,6 +20,14 @@ const headers = {
   "X-API-Referer": "%2F",
 };
 
+const client = redis.createClient({
+  url: "redis://default:HuENOL0ny457ZfrCvnk8IUIf28DFoQNb@redis-14928.c3.eu-west-1-1.ec2.cloud.redislabs.com:14928",
+});
+const store = new RedisStore(client);
+
+client.on("error", (err) => {
+  console.log("Redis Error " + err);
+});
 const cache = {
   exclude: {
     methods: [],
@@ -27,6 +39,7 @@ const cache = {
   limit: 10000 * 5,
   clearOnStale: false,
   maxAge: 1000 * 60 * 60 * 24 * 2,
+  store,
 };
 
 const crackClient = setup({
@@ -65,6 +78,7 @@ const gameClient = async (settings = Settings) => {
       "websites.*",
       "videos.*",
       "genres.*",
+      "similar_games.*",
     ])
     .limit(limit || 20)
     .offset(offset || 0)
@@ -76,4 +90,4 @@ const gameClient = async (settings = Settings) => {
   return response.data;
 };
 
-export { crackClient, gameClient };
+export { crackClient, gameClient, hltbClient };

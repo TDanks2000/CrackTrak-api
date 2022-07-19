@@ -8,7 +8,7 @@ import PcGamesTorrents from "./pcgamestorrents.js";
 import Skidrow from "./skidrow.js";
 
 const Providers = [GameStatus, Predb, FitGirl, PcGamesTorrents, Skidrow];
-const defaultProviders = ["gamestatus", "PcGamesTorrents", "predb"];
+const defaultProviders = ["gamestatus", "predb", "fitgirl"];
 
 export default async function SearchCrack(query, providers = defaultProviders) {
   // filter out the needed providers

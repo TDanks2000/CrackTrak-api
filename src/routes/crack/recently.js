@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 import fuzzysort from "fuzzysort";
-
+import chalk from "chalk";
 import { crackClient } from "../../utils/axios.js";
 
 const genStatus = (first, second) => {
@@ -49,6 +49,11 @@ router.get("/", async (req, res) => {
   //   }
 
   if (gameStatus.status === "fulfilled") {
+    console.log(
+      chalk.bold(
+        `From cache: ${gameStatus.value.request.fromCache || false}`
+      )
+    );
     const items = gameStatus.value.data.list_crack_games
       // filter out incorrect values
       .filter(

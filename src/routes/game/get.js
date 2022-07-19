@@ -1,19 +1,21 @@
 import express from "express";
-import { gameClient } from "../../utils/axios.js";
+import { gameClient, hltbClient } from "../../utils/axios.js";
 
 const router = express.Router();
 
-router.get("/:id", ({ query, params }, res) => {
+router.get("/:id", async ({ query, params }, res) => {
   const { id } = params;
 
   const DecodedId = decodeURIComponent(id);
   const PATTERN = /[^\x20\x2D0-9A-Z\x5Fa-z\xC0-\xD6\xD8-\xF6\xF8-\xFF]/g;
 
+  const DecodedIdReplaced = DecodedId.replace(PATTERN, "").toLowerCase();
+
   const settings = {
     offset: query.offset || 0,
     limit: query.limit || 20,
     sort: "",
-    search: !isNaN(id) ? "" : DecodedId.replace(PATTERN, "").toLowerCase(),
+    search: !isNaN(id) ? "" : DecodedIdReplaced,
     where: !isNaN(id) ? `id = ${id}` : ``,
   };
 
@@ -25,6 +27,42 @@ router.get("/:id", ({ query, params }, res) => {
         .send({ error: { message: "There was an error", data: { error } } });
       console.log("there was an error");
     });
+});
+
+router.get("/", async ({ query }, res) => {
+  const { title, id } = query;
+
+  const DecodedId = decodeURIComponent(id);
+  const DecodedTitle = decodeURIComponent(title);
+  const PATTERN = /[^\x20\x2D0-9A-Z\x5Fa-z\xC0-\xD6\xD8-\xF6\xF8-\xFF]/g;
+
+  const DecodedIdReplaced = DecodedId.replace(PATTERN, "").toLowerCase();
+  const DecodedTitleReplaced = DecodedTitle.replace(PATTERN, "").toLowerCase();
+
+  const settings = {
+    offset: query.offset || 0,
+    limit: query.limit || 20,
+    sort: "",
+    search: id ? "" : DecodedTitleReplaced,
+    where: !id ? "" : `id = ${DecodedIdReplaced}`,
+  };
+
+  try {
+    const [igdb, hltb] = await Promise.all([
+      gameClient(settings),
+      hltbClient.search(DecodedTitleReplaced),
+    ]);
+
+    const Games = [];
+    await Games.push(igdb[0]);
+    await Games.push(hltb[0]);
+
+    res.send(Games);
+  } catch (error) {
+    res
+      .status(404)
+      .send({ error: { message: "There was an error", data: { error } } });
+  }
 });
 
 export default router;

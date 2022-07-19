@@ -13,7 +13,7 @@ const info = {
 const provider = info.name;
 
 const search = async (query) => {
-  const url = await urlCat(info.url, {
+  const url = await urlCat(info.url, "/", {
     s: query,
   });
 
@@ -24,8 +24,8 @@ const search = async (query) => {
   const container = $("div#content.site-content");
 
   const titles = [];
-  container.find("article").each((i, el) => {
-    const title = $(el).find(".entry-title a").first().text().trim();
+  container.find("article.post").each((i, el) => {
+    const title = $(el).find(".entry-title").find("a").first().text().trim();
 
     title && titles.push(title);
   });
