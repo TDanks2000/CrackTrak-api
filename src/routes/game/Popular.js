@@ -8,7 +8,7 @@ router.use("/", async ({ query, body }, res) => {
   );
   const { data } = Data;
 
-  const CheckArray = ["just chatting", "sports", "asmr"];
+  const CheckArray = ["just chatting", "sports", "asmr", "slots"];
 
   const results = data.filter(
     (response) => !CheckArray.includes(response.name.toLowerCase())
