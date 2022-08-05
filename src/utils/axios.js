@@ -90,4 +90,17 @@ const gameClient = async (settings = Settings) => {
   return response.data;
 };
 
-export { crackClient, gameClient, hltbClient };
+const TwitchClient = setup({
+  timeout: 1000 * 6,
+  headers: {
+    "user-agent": headers["user-agent"],
+    Authorization: `Bearer ${access_token}`,
+    "Client-Id": client_id,
+  },
+  cache: {
+    ...cache,
+    maxAge: 1000 * 60 * 60 * 2,
+  },
+});
+
+export { crackClient, gameClient, hltbClient, TwitchClient };

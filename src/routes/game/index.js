@@ -16,4 +16,7 @@ router.use("/get", Get);
 import ALL from "./all.js";
 router.use("/all", ALL);
 
+import popular from "./popular.js";
+router.get("/popular", popular);
+
 export default router;
