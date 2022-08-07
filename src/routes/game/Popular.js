@@ -2,7 +2,7 @@ import express from "express";
 const router = express.Router();
 import { TwitchClient } from "../../utils/axios.js";
 
-router.use("/", async ({ query, body }, res) => {
+router.use("/", async ({ query }, res) => {
   const { data: Data } = await TwitchClient.get(
     `https://api.twitch.tv/helix/games/top`
   );
