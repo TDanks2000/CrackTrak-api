@@ -7,6 +7,7 @@ const Logger = (req, res, next) => {
   const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
   const realIP = ip === "::1" ? "127.0.0.1" : ip;
   const values = Object.values(req.query);
+  const body = Object.values(req.body);
 
   console.log(` `);
   console.log(chalk.bold.cyanBright(`REQUEST URL ${req.path}`));
@@ -16,6 +17,12 @@ const Logger = (req, res, next) => {
     console.log(
       chalk.bold.magentaBright(
         `REQUEST PARAMS: [ ${values.join(", ").toUpperCase()} ]`
+      )
+    );
+  if (body.length > 0)
+    console.log(
+      chalk.bold.magentaBright(
+        `REQUEST BODY: [ ${body.join(", ").toUpperCase()} ]`
       )
     );
   console.log(` `);

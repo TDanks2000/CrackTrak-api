@@ -28,6 +28,7 @@ const store = new RedisStore(client);
 client.on("error", (err) => {
   console.log("Redis Error " + err);
 });
+
 const cache = {
   exclude: {
     methods: [],
