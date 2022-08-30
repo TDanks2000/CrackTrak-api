@@ -44,7 +44,9 @@ router.get("/", async ({ query }, res) => {
     limit: query.limit || 20,
     sort: "",
     search: id ? "" : DecodedTitleReplaced,
-    where: !id ? "" : `id = ${DecodedIdReplaced}`,
+    where: `platforms.abbreviation = "PC" ${
+      !id ? "" : `& id = ${DecodedIdReplaced}`
+    }`,
   };
 
   try {
@@ -54,7 +56,12 @@ router.get("/", async ({ query }, res) => {
     ]);
 
     const Games = [];
-    await Games.push(igdb[0]);
+    const filteredArray = igdb.find((res) => {
+      const { name } = res;
+      return name.toLowerCase() === DecodedTitleReplaced.toLowerCase();
+    });
+
+    await Games.push(!id ? filteredArray : igdb[0]);
     await Games.push(hltb[0]);
 
     res.send(Games);
